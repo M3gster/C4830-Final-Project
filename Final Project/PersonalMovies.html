@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+        <title>Movies</title>
+        
+        <link rel="stylesheet" href="style.css">
+        
+        
+        <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+        <script>
+          // Initialize Firebase
+          var config = {
+            apiKey: "AIzaSyAWUaS9n9AhYRHOPqmmHGslrGlftkQ13ic",
+            authDomain: "final-project-b47e2.firebaseapp.com",
+            databaseURL: "https://final-project-b47e2.firebaseio.com",
+            projectId: "final-project-b47e2",
+            storageBucket: "",
+            messagingSenderId: "824466810203"
+          };
+          firebase.initializeApp(config);
+        </script>
+        
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+        
+        <script>
+        function omdbCall(movieInput) {
+                $.getJSON('https://www.omdbapi.com/?t=' + encodeURI(movieInput)+ '&apikey=cf98a99').then(function(response){
+                    
+                    var image = response.Poster;
+                    var title = response.Title;
+                    var genre = response.Genre;
+                    var rated = response.Rated;
+                    var runtime = response.Runtime;
+                    var director = response.Director;
+                    var actors = response.Actors;
+                    var plot = response.Plot;
+                    
+//                    $('#info').append("The movies are " + movie);
+                    var movie = [image, title, genre, rated, runtime, director, actors, plot];
+                    
+                    if(image !== "N/A"){
+                        
+//                        $('img').attr('src', image);
+//                        $("#title").html(title);
+//                        $("#genre").html(genre);
+//                        $("#rated").html(rated);
+//                        $("#runtime").html(runtime);
+//                        $("#director").html(director);
+//                        $("#actors").html(actors);
+//                        $("#plot").html(plot);
+                        
+                        $('#table_body').append("<tr><td><img src="+ image +"></td><td>"+ title+ "</td><td>"+genre+"</td><td>" + rated + "</td><td>"+runtime+"</td></tr>");
+                        
+                    }
+                    else{
+                        $('img').attr('src', "http://www.bsmc.net.au/wp-content/uploads/No-image-available.jpg");
+                    }
+//                    $('#myMovies').append("\n"+image + "\n");
+                    
+                });
+            }
+            
+            function display(){
+            var rootRef = firebase.database().ref().child("Movies");
+            rootRef.on("child_added", snap => {
+                var title = snap.val();
+                var movie = omdbCall(title);
+                
+            });
+        };
+        </script>
+    
+    </head>
+    <body onload="display()">
+        <nav class="navbar navbar-inverse">
+            <ul class="nav navbar-nav">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="PersonalMovies.html">My Movies</a></li>
+            </ul>
+          <p class="navbar-text">Some text</p>
+        </nav>
+        <div class="container">
+            <h1>Your Movie List</h1>
+            <hr>
+            <div>
+                
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Poster</th>
+                            <th>Title</th>
+                            <th>Genre</th>
+                            <th>Rated</th>
+                            <th>Runtime</th>
+                        </tr>
+                    </thead>
+                    <tbody id="table_body"></tbody>
+                </table>
+            </div>
+        </div>
+        
+    </body>
+</html>

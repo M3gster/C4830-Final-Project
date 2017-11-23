@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+       <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!--        <script src="jquery-3.2.1.min.js"></script>-->
+       <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+        
+        <title>Movies</title>
+        
+        <link rel="stylesheet" href="style.css">
+        
+        
+        <script src="https://www.gstatic.com/firebasejs/4.6.2/firebase.js"></script>
+        <script>
+          // Initialize Firebase
+          var config = {
+            apiKey: "AIzaSyAWUaS9n9AhYRHOPqmmHGslrGlftkQ13ic",
+            authDomain: "final-project-b47e2.firebaseapp.com",
+            databaseURL: "https://final-project-b47e2.firebaseio.com",
+            projectId: "final-project-b47e2",
+            storageBucket: "",
+            messagingSenderId: "824466810203"
+          };
+          firebase.initializeApp(config);
+        </script>
+        
+        <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
+        
+        <script>
+            
+            function add(){
+                var movieInput = $("#movieInput").val();
+                console.log(movieInput);
+                $.getJSON('https://www.omdbapi.com/?t=' + encodeURI(movieInput)+ '&apikey=cf98a99').then(function(response){
+                    
+                    var title = response.Title;
+                    
+                    var rootRef = firebase.database().ref();
+                    rootRef.child("Movies").child(title).set(title);
+                });
+            };
+            
+        function display(){
+            var rootRef = firebase.database().ref().child("Movies");
+            rootRef.on("child_added", snap => {
+                var movie = snap.val();
+                $('#info').append("The movies are " + movie);
+            });
+        };
+            
+//        function delete(){
+//            var rootRef = firebase.database().ref().child("Movies");
+//            rootRef.on("child_remove", snap => {
+//                var movie = snap.val();
+//                $('#info').append("The movies are " + movie);
+//            });
+//        };    
+        </script>
+        
+        <script>
+            
+            function omdbCall() {
+                var movieInput = $("#movieInput").val();
+                console.log(movieInput);
+                $.getJSON('https://www.omdbapi.com/?t=' + encodeURI(movieInput)+ '&apikey=cf98a99').then(function(response){
+                    
+                    var image = response.Poster;
+                    var title = response.Title;
+                    var genre = response.Genre;
+                    var rated = response.Rated;
+                    var runtime = response.Runtime;
+                    var director = response.Director;
+                    var actors = response.Actors;
+                    var plot = response.Plot;
+                    
+                    var movie = [image, title, genre, rated, runtime, director, actors, plot];
+                    
+                    
+                    if(image !== "N/A"){
+                        $('img').attr('src', image);
+                        $("#title").html(title);
+                        $("#genre").html(genre);
+                        $("#rated").html(rated);
+                        $("#runtime").html(runtime);
+                        $("#director").html(director);
+                        $("#actors").html(actors);
+                        $("#plot").html(plot);
+                    }
+                    else{
+                        $('img').attr('src', "http://www.bsmc.net.au/wp-content/uploads/No-image-available.jpg");
+                    }
+                    
+                });
+            }
+            
+        </script>
+    </head>
+    <body>
+        
+        <script>
+            firebase.auth().onAuthStateChanged(function(user){
+                if(user){
+                    console.log("user signed in");        
+                }
+                else{
+                    console.log("no user signed in");
+                }
+            });</script>
+        <nav class="navbar navbar-inverse">
+            <ul class="nav navbar-nav">
+                <li><a href="home.html">Home</a></li>
+                <li><a href="PersonalMovies.html">My Movies</a></li>
+            </ul>
+          <p class="navbar-text">Some text</p>
+        </nav>
+        <div class="container">
+            <h1>Welcome to my movie app</h1>
+            <input type="text" placeholder="Search Movie" id="movieInput"/>
+            <input type="button" value="Search" onclick="omdbCall();"/>
+            <hr>
+            <img src="http://www.bsmc.net.au/wp-content/uploads/No-image-available.jpg">
+            
+            <br><label id="title"></label><br>
+            <label id="genre"></label>
+            <label id="rated"></label>
+            <label id="runtime"></label><br>
+            <label id="director"></label><br>
+            <label id="actors"></label><br>
+            
+            <label id="plot"></label><br>
+            
+            <input type="button" value="Add to your Movies" onclick="add();"/>
+            <input type="button" value="Display your Movies" onclick="display();"/>
+            <p id="info"></p>
+            
+    </body>
+</html>
