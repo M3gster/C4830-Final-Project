@@ -46,9 +46,11 @@
             
         function display(){
             var rootRef = firebase.database().ref().child("Movies");
+            $('#info').append("The movies are: <br />");
             rootRef.on("child_added", snap => {
                 var movie = snap.val();
-                $('#info').append("The movies are " + movie);
+               // $('#info').append("The movies are " + movie);
+                $('#info').append(movie + "<br /> ");
             });
         };
             
@@ -115,10 +117,10 @@
                 <li><a href="home.html">Home</a></li>
                 <li><a href="PersonalMovies.html">My Movies</a></li>
             </ul>
-          <p class="navbar-text">Some text</p>
+ <!--           <p class="navbar-text">Some text</p> -->
         </nav>
         <div class="container">
-            <h1>Welcome to my movie app</h1>
+            <h1>MyMovieList</h1>
             <input type="text" placeholder="Search Movie" id="movieInput"/>
             <input type="button" value="Search" onclick="omdbCall();"/>
             <hr>
