@@ -10,21 +10,17 @@ container h1 {
     text-decoration: underline;
 }
 
-img {
-    border 2px solid black;
-    border-radius: 20px;
-    opacity: .5;
+.bg
+{
+  width: 100%;
+  height: 200px;
+  z-index: 0;
 }
-
-img: hover {
-    opacity: 1;
-}
-
 button{
     align: center;
     width: 200px;
     height: 50px;
-    font-szie: 20px;
+    font-size: 20px;
     color: blue;
 }
 
@@ -36,10 +32,85 @@ table {
 
 td, th {
     border: 1px solid #dddddd;
-    text-align: left;
+    /*text-align: left;*/
+    text-align: center;
     padding: 8px;
 }
 
-tr:nth-child(even) {
-    background-color: #dddddd;
+
+/*Source for Image Zoom: https://alt-web.com/TUTORIALS/?id=bootstrap_simple_image_zoom*/
+.zoom {      
+    -webkit-transition: all 0.35s ease-in-out;    
+    -moz-transition: all 0.35s ease-in-out;    
+    transition: all 0.35s ease-in-out;     
+    cursor: -webkit-zoom-in;      
+    cursor: -moz-zoom-in;      
+    cursor: zoom-in; 
+    
+}     
+
+.zoom:hover,  
+.zoom:active,   
+.zoom:focus {
+    /**adjust scale to desired size, 
+    add browser prefixes**/
+    -ms-transform: scale(1.5);    
+    -moz-transform: scale(1.5);  
+    -webkit-transform: scale(1.5);  
+    -o-transform: scale(1.5);  
+    transform: scale(1.5);    
+    position:relative;      
+    z-index:100;  
+}
+
+/* Centers movie poster on search page */
+#moviePoster {
+    margin: auto;
+    
+}
+
+/* Makes background image for login page fill the screen */
+#bgIndex {
+  position: fixed; 
+  top: 0; 
+  left: 0; 
+
+  min-width: 100%;
+  min-height: 100%;
+}
+
+
+/*Below styling for new nav bar*/
+ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #333;
+}
+
+li {
+    float: left;
+}
+
+#first{
+    padding-left: 5px;
+}
+
+li a {
+    display: block;
+    color: white;
+    text-align: center;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+li a:hover {
+    color: white;
+}
+li a:hover:not(.active) {
+    background-color: #111;
+}
+
+.active {
+    background-color: darkslateblue;
 }
