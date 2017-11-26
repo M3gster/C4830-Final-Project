@@ -33,7 +33,6 @@
                     // Terms of service url.
                     tosUrl: '<your-tos-url>'
                   };
-
               // Initialize the FirebaseUI Widget using Firebase.
               var ui = new firebaseui.auth.AuthUI(firebase.auth());
               // The start method will wait until the DOM is loaded.
@@ -42,8 +41,12 @@
         
     </head>
     <div></div>
-    <body>
-        <h1 align="center" style="color:white">FIrebase Authorization</h1>
-        <div id="firebaseui-auth-container"></div>
+    <body background="backdrop.jpg" id="bgIndex">
+        <h1 style="padding-top: 250px;color:white;text-shadow: 2px 2px black" align="center">Firebase Authorization</h1>
+        <div style="border-color:black;border-style: solid; width: 350px; padding: 10px; margin: 0 auto; background-color: silver; box-shadow: 10px 10px 5px black">
+            <div id="firebaseui-auth-container"></div>
+        </div>
+       
+        
     </body>
 </html>
