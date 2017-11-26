@@ -41,28 +41,15 @@
                     var director = response.Director;
                     var actors = response.Actors;
                     var plot = response.Plot;
-                    
-//                    $('#info').append("The movies are " + movie);
+
                     var movie = [image, title, genre, rated, runtime, director, actors, plot];
                     
                     if(image !== "N/A"){
-                        
-//                        $('img').attr('src', image);
-//                        $("#title").html(title);
-//                        $("#genre").html(genre);
-//                        $("#rated").html(rated);
-//                        $("#runtime").html(runtime);
-//                        $("#director").html(director);
-//                        $("#actors").html(actors);
-//                        $("#plot").html(plot);
-                        
-                        $('#table_body').append("<tr><td><img src="+ image +"></td><td>"+ title+ "</td><td>"+genre+"</td><td>" + rated + "</td><td>"+runtime+"</td></tr>");
-                        
+                        $('#table_body').append('<tr><td><img class="thumbnail zoom" src='+ image +'></td><td>'+ title+ '</td><td>'+genre+'</td><td>' + rated + "</td><td>"+runtime+"</td></tr>");
                     }
                     else{
                         $('img').attr('src', "http://www.bsmc.net.au/wp-content/uploads/No-image-available.jpg");
                     }
-//                    $('#myMovies').append("\n"+image + "\n");
                     
                 });
             }
@@ -79,22 +66,24 @@
     
     </head>
     <body onload="display()">
-        <nav class="navbar navbar-inverse">
-            <ul class="nav navbar-nav">
-                <li><a href="home.html">Home</a></li>
-                <li><a href="PersonalMovies.html">My Movies</a></li>
-            </ul>
-          <p class="navbar-text">Some text</p>
-        </nav>
+        <img class="bg" src="MyMovieList.jpg" alt="banner">
+    
+        <ul>
+            <li id="first" ><a href="home.html">Home</a></li>
+            <li class="active"><a href="PersonalMovies.html">My Movies</a></li>
+            <li style="background-color:firebrick; float:right" id="logout"><a href="index.html">Logout</a></li>
+
+        </ul>
+        
         <div class="container">
-            <h1>Your Movie List</h1>
+            <h1>YourMovieList</h1>
             <hr>
             <div>
                 
-                <table>
+                <table class="table table-hover">
                     <thead>
                         <tr>
-                            <th>Poster</th>
+                            <th>Movie Poster</th>
                             <th>Title</th>
                             <th>Genre</th>
                             <th>Rated</th>
