@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html>
+    
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
+
         
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-<!--        <script src="jquery-3.2.1.min.js"></script>-->
        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
         
         <title>Movies</title>
@@ -30,6 +31,8 @@
         
         <script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.6.2/jquery.min.js"></script>
         
+        
+    
         <script>
             
             function add(){
@@ -45,6 +48,7 @@
             };
             
         function display(){
+            $('#info').empty(); // added to remove duplication issue
             var rootRef = firebase.database().ref().child("Movies");
             $('#info').append("The movies are: <br />");
             rootRef.on("child_added", snap => {
@@ -53,14 +57,7 @@
                 $('#info').append(movie + "<br /> ");
             });
         };
-            
-//        function delete(){
-//            var rootRef = firebase.database().ref().child("Movies");
-//            rootRef.on("child_remove", snap => {
-//                var movie = snap.val();
-//                $('#info').append("The movies are " + movie);
-//            });
-//        };    
+
         </script>
         
         <script>
@@ -81,25 +78,42 @@
                     
                     var movie = [image, title, genre, rated, runtime, director, actors, plot];
                     
+                    // Below code clears screen in preperation for new movie information
+                    // In case the new movie is missing information, we clear all the old info to ensure that
+                    // nothing is leftover.
+                    $("#moviePoster").attr('src', "http://www.bsmc.net.au/wp-content/uploads/No-image-available.jpg");
+                    $("#title").html("There is no movie with that name. Please try again.");
+                    $("#genre").html("");
+                    $("#rated").html("");
+                    $("#runtime").html("");
+                    $("#director").html("");
+                    $("#actors").html("");
+                    $("#plot").html("");  
                     
                     if(image !== "N/A"){
-                        $('img').attr('src', image);
+                        $("#moviePoster").attr('src', image);
+                        $("#moviePoster").attr('class', 'thumbnail zoom');
                         $("#title").html(title);
                         $("#genre").html(genre);
                         $("#rated").html(rated);
                         $("#runtime").html(runtime);
                         $("#director").html(director);
                         $("#actors").html(actors);
-                        $("#plot").html(plot);
+                        $("#plot").html(plot);              
                     }
                     else{
-                        $('img').attr('src', "http://www.bsmc.net.au/wp-content/uploads/No-image-available.jpg");
+                        $("#moviePoster").attr('src', "http://www.bsmc.net.au/wp-content/uploads/No-image-available.jpg");
+                        $("#plot").html("There is no movie with that name. Please try again.");
                     }
+                   
+                    
                     
                 });
             }
             
         </script>
+    
+        
     </head>
     <body>
         
@@ -112,31 +126,34 @@
                     console.log("no user signed in");
                 }
             });</script>
-        <nav class="navbar navbar-inverse">
-            <ul class="nav navbar-nav">
-                <li><a href="home.html">Home</a></li>
-                <li><a href="PersonalMovies.html">My Movies</a></li>
-            </ul>
- <!--           <p class="navbar-text">Some text</p> -->
-        </nav>
+        <img class="bg" src="MyMovieList.jpg" alt="banner">
+
+        
+        <ul>
+            <li id="first" class="active"><a href="home.html">Home</a></li>
+            <li><a href="PersonalMovies.html">My Movies</a></li>
+            <li style="background-color:firebrick; float:right" id="logout"><a href="index.html">Logout</a></li>
+        </ul>
+        
         <div class="container">
             <h1>MyMovieList</h1>
             <input type="text" placeholder="Search Movie" id="movieInput"/>
             <input type="button" value="Search" onclick="omdbCall();"/>
+           
             <hr>
-            <img src="http://www.bsmc.net.au/wp-content/uploads/No-image-available.jpg">
-            
+            <img id="moviePoster">
             <br><label id="title"></label><br>
             <label id="genre"></label>
             <label id="rated"></label>
             <label id="runtime"></label><br>
             <label id="director"></label><br>
             <label id="actors"></label><br>
-            
             <label id="plot"></label><br>
             
-            <input type="button" value="Add to your Movies" onclick="add();"/>
-            <input type="button" value="Display your Movies" onclick="display();"/>
+            <div>
+                <input id="addButton" type="button" value="Add to your Movies" onclick="add();"/>
+            </div>
+            <input id="button" type="button" value="Display your Movies" onclick="display();"/>
             <p id="info"></p>
             
     </body>
