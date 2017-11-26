@@ -3,7 +3,7 @@
 Things to turn in: 
 
 1) Link to GitHub
-2) Link to Instance (Unless you do a hybrid app)
+2) Link to Instance (Unless you do a hybrid app): http://ec2-18-221-7-109.us-east-2.compute.amazonaws.com/HackWeek/index.html 
 3) Documentation for project
   - Names of all group members
   - How to use it
