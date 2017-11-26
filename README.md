@@ -4,7 +4,7 @@ Things to turn in:
 
 1) Link to GitHub
 2) Link to Instance (Unless you do a hybrid app)
-3)Documentation for project
+3) Documentation for project
   - Names of all group members
   - How to use it
   - What technologies you used 
